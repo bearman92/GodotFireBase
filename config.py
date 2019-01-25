@@ -12,18 +12,23 @@ p_app_id = "kz.dumbcatstudio.castlelines"
 
 # Update this to customize the module
 _config = {
-"Analytics"      : True,
-"AdMob"          : True,
-"Invites"        : True,
-"RemoteConfig"   : True,
-"Notification"   : True,
-"Storage"        : False,
-"Firestore"      : False,
+"Analytics"             : True,
+"AdMob"                 : True,
+"Invites"               : True,
+"RemoteConfig"          : True,
+"Notification"          : True,
+"Storage"               : False,
+"Firestore"             : False,
 
-"Authentication" : False,
-"AuthGoogle"     : True,
-"AuthFacebook"   : False,
-"AuthTwitter"    : False
+"Authentication"        : False,
+"AuthGoogle"            : True,
+"AuthFacebook"          : False,
+"AuthTwitter"           : False,
+
+"Database"              : False,
+"Crashalytics"          : False,
+"AppIndexing"           : False,
+"PerformanceMonitoring" : False 
 }
 
 FILES_LIST		= \
@@ -198,52 +203,64 @@ def configure(env):
         env.android_add_maven_repository(\
         "url 'https://oss.sonatype.org/content/repositories/snapshots'")
 
-        env.android_add_gradle_classpath("com.google.gms:google-services:4.1.0")
+        env.android_add_gradle_classpath("com.google.gms:google-services:4.0.1")
         env.android_add_gradle_plugin("com.google.gms.google-services")
 
-        env.android_add_dependency("compile 'com.android.support:support-annotations:28.0.0'")
-        env.android_add_dependency("compile 'com.google.firebase:firebase-core:16.0.6'")
-        env.android_add_dependency("compile 'com.google.firebase:firebase-analytics:16.0.6'")
-        env.android_add_dependency("compile 'com.google.android.gms:play-services-measurement-base:16.0.0'")
+        env.android_add_dependency("implementation 'com.android.support:support-annotations:28.0.0'")
+        env.android_add_dependency("implementation 'com.google.firebase:firebase-core:16.0.6'")
+        env.android_add_dependency("implementation 'com.google.firebase:firebase-analytics:16.0.6'")
+        env.android_add_dependency("implementation 'com.google.android.gms:play-services-measurement-base:16.0.0'")
 
         if _config["Auth"]:
-            env.android_add_dependency("compile 'com.google.firebase:firebase-auth:16.0.6'")
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-auth:16.1.0'")
             if _config["AuthGoogle"]:
-                env.android_add_dependency("compile 'com.google.android.gms:play-services-auth:16.0.0'")
+                env.android_add_dependency("implementation 'com.google.android.gms:play-services-auth:16.0.0'")
 
             if _config["AuthFacebook"]:
-                env.android_add_dependency("compile 'com.facebook.android:facebook-android-sdk:4.18.0'")
+                env.android_add_dependency("implementation 'com.facebook.android:facebook-android-sdk:4.18.0'")
 
             if _config["AuthTwitter"]:
                 env.android_add_dependency(\
-                "compile('com.twitter.sdk.android:twitter-core:1.6.6@aar') { transitive = true }")
+                "implementation('com.twitter.sdk.android:twitter-core:1.6.6@aar') { transitive = true }")
                 env.android_add_dependency(\
-                "compile('com.twitter.sdk.android:twitter:1.13.1@aar') { transitive = true }")
+                "implementation('com.twitter.sdk.android:twitter:1.13.1@aar') { transitive = true }")
 
         if _config["AdMob"]:
-            env.android_add_dependency("compile 'com.google.firebase:firebase-ads:17.1.2'")
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-ads:17.1.2'")
 
         if _config["RemoteConfig"]:
-            env.android_add_dependency("compile 'com.google.firebase:firebase-config:16.1.3'")
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-config:16.1.3'")
 
         if _config["Notification"]:
-            env.android_add_dependency("compile 'com.google.firebase:firebase-messaging:17.3.4'")
-            env.android_add_dependency("compile 'com.firebase:firebase-jobdispatcher:0.8.5'")
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-messaging:17.3.4'")
+            env.android_add_dependency("implementation 'com.firebase:firebase-jobdispatcher:0.8.5'")
 
         if _config["Invites"]:
-            env.android_add_dependency("compile 'com.google.firebase:firebase-invites:16.0.6'")
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-invites:16.0.6'")
 
         if _config["Storage"]:
-            env.android_add_dependency("compile 'com.google.firebase:firebase-storage:16.0.6'")
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-storage:16.0.5'")
 
         if _config["Firestore"]:
-            env.android_add_dependency("compile 'com.google.firebase:firebase-firestore:17.1.0'")
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-firestore:17.1.5'")
+        
+        if _config["Database"]:
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-database:16.0.5'")
+        
+        if _config["Crashalytics"]:
+            env.android_add_dependency("implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'")
 
-        env.android_add_dependency("compile 'commons-codec:commons-codec:1.10'")
+        if _config["AppIndexing"]:
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-appindexing:17.1.0'")
 
-        env.android_add_java_dir("android");
-        env.android_add_res_dir("res");
-        env.android_add_to_manifest("android/AndroidManifestChunk.xml");
-        env.android_add_to_permissions("android/AndroidPermissionsChunk.xml");
+        if _config["PerformanceMonitoring"]:
+            env.android_add_dependency("implementation 'com.google.firebase:firebase-perf:16.2.3'")
+
+        env.android_add_dependency("implementation 'commons-codec:commons-codec:1.10'")
+
+        env.android_add_java_dir("android")
+        env.android_add_res_dir("res")
+        env.android_add_to_manifest("android/AndroidManifestChunk.xml")
+        env.android_add_to_permissions("android/AndroidPermissionsChunk.xml")
         env.android_add_default_config("minSdkVersion 15")
         env.android_add_default_config("applicationId '"+ p_app_id +"'")
