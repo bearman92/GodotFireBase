@@ -112,6 +112,7 @@ public class RemoteConfig {
 	public String getValue (final String key) {
 		if (!isInitialized()) { return "NULL"; }
 
+		fetchRemoteConfigs();
 		Utils.d("Getting Remote config value for: " + key);
 		return mFirebaseRemoteConfig.getValue(key).asString();
 	}
@@ -119,6 +120,7 @@ public class RemoteConfig {
 	public String getValue (final String key, final String namespace) {
 		if (!isInitialized()) { return "NULL"; }
 
+		fetchRemoteConfigs();
 		Utils.d("Getting Remote config value for { " + key + " : " + namespace + " }");
 		return mFirebaseRemoteConfig.getValue(key, namespace).asString();
 	}
