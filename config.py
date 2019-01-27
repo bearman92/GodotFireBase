@@ -264,3 +264,4 @@ def configure(env):
         env.android_add_to_permissions("android/AndroidPermissionsChunk.xml")
         env.android_add_default_config("minSdkVersion 15")
         env.android_add_default_config("applicationId '"+ p_app_id +"'")
+        env.android_add_default_config("multiDexEnabled true")
